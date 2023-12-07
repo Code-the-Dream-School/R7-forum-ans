@@ -8,5 +8,7 @@
     <strong>Skill level:</strong>
     <%= user.skill_level %>
   </p>
+  <%= button_to "Logon as this user", user_logon_path(user), method: :post %>
+
 
 </div>
