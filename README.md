@@ -2,7 +2,7 @@
 
 # Lesson 6: Rails Basics
 
-We are going to create a Rails application from scratch, explaining all of the parts.  To begin, fork this repository.  Then clone your fork.  As usual, be sure not to clone into an existing git repository.  Then create a new branch called rails_basics.  This is where you will do your work. Then do:
+We are going to create a Rails application from scratch, explaining all of the parts.  To begin, fork this repository.  Then clone your fork.  As usual, be sure not to clone into an existing git repository.  Then, cd to the directory where you cloned, and create a new branch called rails_basics.  This is where you will do your work. Then do:
 ```
 bin/bundle install
 ```
@@ -24,7 +24,7 @@ bin/rails generate scaffold forum forum_name:string
 ```
 Have a look at the messages that come back.  Quite a few things are generated for you:
 
-- A mgration.  This creates a table in the database for forum records.
+- A migration.  This creates a table in the database for forum records.
 - A model. This is the Active Record class for the forum records.  Active Record is an object relational mapper, which converts operations on Active Record objects into SQL.
 - A route is added.
 - A controller is created.
