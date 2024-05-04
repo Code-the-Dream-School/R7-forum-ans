@@ -14,10 +14,10 @@
 <%= link_to "New user", new_user_path %>
 <div>
   <% if @current_user %>
-  <%= "#{@current_user["name"]} is logged on." %>
-  <%= button_to "Log Off", user_logoff_path, method: :delete %>
+    <%= "#{@current_user.name} is logged on." %>
+    <%= button_to "Log Off", user_logoff_path, method: :delete %>
   <% else %>
-  No one is logged in.
+    No one is logged in.
   <% end %>
-  </div>
+</div>
   
