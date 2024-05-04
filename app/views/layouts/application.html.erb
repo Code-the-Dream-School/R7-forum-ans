@@ -10,10 +10,10 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-  <% if session[:current_user] %>
-  <%= "#{session[:current_user]["name"]} is logged on." %>
+  <% if @current_user %>
+    <%= "#{@current_user.name} is logged on." %>
   <% else %>
-  No one is logged on.
+    No one is logged on.
   <% end %>
     <ul class="ul-bar">
       <li class="dropdown"><span>Forums</span>

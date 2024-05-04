@@ -39,7 +39,7 @@ class PostsController < ApplicationController
   private
 
   def check_logon 
-    if !session[:current_user]
+    if !@current_user
       redirect_to forums_path, notice: "You can't add, modify, or delete posts before logon."
     end
   end
@@ -53,7 +53,7 @@ class PostsController < ApplicationController
   end
 
   def check_access
-    if @post.user_id != session[:current_user]["id"]
+    if @post.user_id != @current_user.id
       redirect_to forums_path, notice: "That's not your post, so you can't change it."
     end
   end

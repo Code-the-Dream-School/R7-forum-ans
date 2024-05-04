@@ -5,7 +5,7 @@ class SubscriptionsController < ApplicationController
 
   # GET /subscriptions or /subscriptions.json
   def index
-    @forums = Forum.find_by_sql("SELECT forums.* from forums JOIN subscriptions ON forums.id = forum_id WHERE user_id = $1 ORDER BY priority",[@user.id])
+    @forums = Forum.joins(:subscriptions).where(subscriptions: {user_id: @user.id}).order(:priority)
   end
 
   # GET /subscriptions/1 or /subscriptions/1.json
@@ -14,10 +14,10 @@ class SubscriptionsController < ApplicationController
 
   # GET /subscriptions/new
   def new
-    if @forum.subscriptions.where(user_id: @user.id).any?
+    if @forum.subscriptions.where(user_id: @current_user.id).any?
       redirect_to forums_path, notice: "You are already subscribed to that forum."
     end
-    @subscription = @user.subscriptions.new
+    @subscription = @current_user.subscriptions.new
     @subscription.forum_id = @forum.id
   end
 
@@ -27,7 +27,7 @@ class SubscriptionsController < ApplicationController
 
   # POST /subscriptions or /subscriptions.json
   def create
-    @subscription = @user.subscriptions.new(subscription_params)
+    @subscription = @current_user.subscriptions.new(subscription_params)
     @subscription.forum_id = @forum.id       
     
     respond_to do |format|
@@ -67,7 +67,7 @@ class SubscriptionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_subscription
-      @subscription = Subscription.find_by(id: params[:id], user_id: @user.id)
+      @subscription = Subscription.find_by(id: params[:id], user_id: @current_user.id)
     end
 
     # Only allow a list of trusted parameters through.
@@ -80,10 +80,9 @@ class SubscriptionsController < ApplicationController
     end    
     
     def check_logon 
-      if !session[:current_user]
+      if !@current_user
         redirect_to forums_path, notice: "You can't access subscriptions unless you are logged in."
-      else 
-        @user = User.find(session[:current_user]["id"])  # we'll need this!
       end
     end
+
 end
